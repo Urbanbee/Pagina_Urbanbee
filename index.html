@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abejas Urbanas de Medellín</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js"></script>
+    <style>
+        /* Estilos generales */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background: #f3c548;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+        }
+        nav {
+            background: #444e52;
+            padding: 10px 0;
+        }
+        nav ul {
+            list-style: none;
+            text-align: center;
+            padding: 0;
+        }
+        nav ul li {
+            display: inline;
+            margin-right: 15px;
+        }
+        nav ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        section {
+            padding: 20px;
+            text-align: center;
+        }
+        /* Estilos del mapa */
+        #map {
+            height: 500px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        /* Estilos del pie de página */
+        footer {
+            background: #333;
+            color: #fff;
+            text-align: center;
+            padding: 15px 0;
+        }
+        /* Estilos del logo */
+        .logo-inferior-centro {
+            width: 100px; /* Ajusta el tamaño del logo */
+            height: auto; /* Mantiene la proporción */
+            margin-top: 10px; /* Espacio encima del logo */
+        }
+        /* Botón de WhatsApp */
+        .whatsapp-button {
+            background: #25d366;
+            color: #fff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 10px;
+            display: inline-block;
+        }
+        /* Estilos de la galería */
+        .galeria-container {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        figure {
+            text-align: center;
+        }
+        figcaption {
+            font-style: italic;
+            color: #555;
+            margin-top: 5px;
+        }
+        /* Formulario */
+        form {
+            text-align: center;
+            margin-top: 20px;
+        }
+        label, input, textarea {
+            display: block;
+            margin: 10px auto;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Encabezado -->
+    <header>
+        <h1>Abejas Urbanas de Medellín</h1>
+        <p>Descubre la importancia de las abejas sin aguijón y su rol en la biodiversidad urbana de Medellín</p>
+    </header>
+
+    <!-- Navegación -->
+    <nav>
+        <ul>
+            <li><a href="quienes somos">¿Quienes somos?</a></li>
+            <li><a href="#comportamiento">Comportamiento</a></li>
+            <li><a href="#dieta">Dieta</a></li>
+            <li><a href="#Monitoreo de Colonias Urbanas y Recursos Florales">Monitoreo de Colonias Urbanas y Recursos Florales</a></li>
+            <li><a href="#mapa">Mapa de Distribución</a></li>
+            <li><a href="#identificacion">Identificación de Nidos</a></li>
+            <li><a href="#recursos">Recursos</a></li>
+            <li><a href="#Bibliografía">Bibliografía</a></li>
+            <li><a href="#contacto">Contacto</a></li>
+        </ul>
+    </nav>
+<!-- Sección: Quienes somos -->
+<section id="quienes somos">
+    <h2 style="text-align: center;">¿Quienes somos?</h2>
+    <p style="text-align: center;">
+    <p style="text-align: justify;">   
+     Urban Bee es un colectivo familiar de Medellín, surgido del amor y la pasión de la familia Castañeda Riascos por las abejas. Nuestro objetivo es conocer su ecología, su distribución en la ciudad y la dieta de las abejas sociales sin aguijón. Impulsados por este interés, 
+     iniciamos inventarios en distintos puntos de Medellín, comenzando con nuestro primer registro en el campus de la Universidad Nacional. Posteriormente, expandimos el estudio a la Comuna 8 y 10 ,en barrios como Villa Hermosa, Prado Centro y Sucre.
+     Actualmente, nuestro enfoque está en comprender la abundancia y distribución de estas abejas, no solo en nuestro barrio, sino en toda el área de Medellín y, a futuro, en el Valle de Aburrá. Este proyecto busca identificar patrones de nidificación, tipos de sustrato y 
+     otros factores que influyen en la dinámica de sus poblaciones en entornos urbanos. Además, llevamos a cabo un monitoreo continuo del polen recolectado por <em>Nannotrigona mellaria </em> y (Smith, 1862) y <em>Tetragonisca angustula </em>(Latreille, 1811) en nuestra sede 
+     en Villa Hermosa (6.259584° N; -75.549527° W). Paralelamente, promovemos la educación ciudadana y exploramos alternativas para aumentar la disponibilidad de recursos florales en la ciudad, contribuyendo así al fortalecimiento de las poblaciones de abejas urbanas. Puedes contribuir enviándonos información sobre 
+     los avistamientos en tu barrio. Escríbenos a nuestro correo con los detalles del avistamiento, incluyendo coordenadas geográficas, fotos y el tipo de sustrato donde se encontró la colonia. 
+     Esta información será almacenada y representada en un mapa para identificar patrones de nidificación. 
+     ¡Tu colabaroción  es fundamental para nosotros! Cada avistamiento y cada aporte contribuyen al conocimiento y conservación de estos polinizadores esenciales.
+
+    <p style="text-align: justify;">
+</section>
+
+
+<section id="Abejas Sociales en el Área Urbana de Medellín">
+    <h2>Abejas Sociales en el Área Urbana de Medellín</h2>
+    
+    <p style="text-align: justify;">
+        En la zona urbana de Medellín habitan diversas especies de abejas, pero en esta página nos enfocaremos en aquellas abejas sociales sin aguijón que nidifican en distintos lugares como postes, grietas en paredes, suelos de concreto, baldosas y cavidades en muros. 
+        Entre ellas destacan <em>Nannotrigona mellaria </em>(Smith, 1862) y <em>Tetragonisca angustula </em>(Latreille, 1811), ambas pertenecientes al orden Himenóptera, superfamilia Apoidea y tribu Meliponini. Su origen es América Tropical (Neotrópico) y, como abejas eusociales, 
+        presentan una organización en castas compuesta por reinas, obreras y machos.
+        En cuanto a su nidificación, <em>Tetragonisca angustula</em> (Nates-Parra et al., 2021) se caracteriza por mantener abejas guardianas en la entrada del tubo de acceso a la colmena, donde defienden activamente su nido. Aunque no cierran completamente el tubo, pueden reducir la entrada 
+        con cera si existe un riesgo persistente. Su estrategia de defensa es activa, atacando a intrusos y emitiendo señales de alarma para alertar a la colonia.Por otro lado, <em>Nannotrigona mellaria </em>(Silva, 2019) presenta un comportamiento diferente, ya que es capaz de cerrar 
+        completamente el tubo de entrada ante amenazas o durante la noche. Además, su tubo puede cambiar de diámetro y extenderse hasta 21 cm de largo, lo que le permite regular su acceso según las condiciones externas. Las abejas guardianas de esta especie suelen permanecer en el borde interno del tubo y,
+        al detectar la presencia de un intruso, se esconden rápidamente para evitar ser vistas.
+    <p>
+    <div class="habitad-galeria" style="display: flex; justify-content: center; gap: 20px;">
+
+        <figure>
+            <img src="imagenes/img_2637.jpg" alt="Abejas Urbanas de Medellín" style="width: 300px;">
+            <figcaption>Abejas Urbanas de Medellín -  <em>Nannotrigona mellaria</em></figcaption>
+        </figure> 
+        <figure>
+            <img src="imagenes/img_2913.jpg" alt="Abejas Urbanas de Medellín" style="width: 300px;">
+            <figcaption>Abejas Urbanas de Medellín -  <em>Tetragonisca angustula</em></figcaption>
+        </figure> 
+        <figure>
+            <img src="imagenes/img_2642.jpg" alt="Abejas Urbanas de Medellín" style="width: 300px;">
+            <figcaption>Abejas Urbanas de Medellín -  <em>Nannotrigona mellaria</em></figcaption>
+        </figure> 
+        <figure>
+            <img src="imagenes/img_2602.jpg" alt="Abejas Urbanas de Medellín" style="width: 350px;">
+            <figcaption>Abejas Urbanas de Medellín -  <em>Tetragonisca angustula</em></figcaption>
+        </figure>       
+    </div>
+</section>
+
+<!-- Sección: Dieta -->
+<section id="dieta">
+    <h2>Dieta</h2>
+    <p style="text-align: justify;">
+    En las abejas Meliponini, aún no está completamente definido si a lo largo de su ciclo de vida desempeñan tareas de manera secuencial o si existe una superposición de funciones dentro de la colonia, lo cual puede variar según la especie. Las obreras jóvenes inician sus actividades dentro del 
+         nido realizando tareas como el acicalamiento, la limpieza de celdas y la eliminación de desechos. Posteriormente, pasan a manipular cerumen y resinas, atender los potes de almacenamiento de alimento y acompañar a la reina durante la oviposición. A medida que maduran, asumen roles fuera del nido, 
+         como el forrajeo de néctar, polen y agua, además de la vigilancia de la colonia (Nates-Parra et al., 2021).
+         La dieta de estas abejas se basa en recursos esenciales como el polen, que les proporciona proteínas, y el néctar, su principal fuente de carbohidratos, ambos fundamentales para la salud y continuidad de la colonia. Diversas familias botánicas, como Euphorbiaceae, Myrtaceae, Arecaceae, Anacardiaceae,
+         Urticaceae, Sapindaceae y Rutaceae, son fuente de alimento para ellas. Además, el género <em>Nannotrigona</em> se distingue por su capacidad de realizar polinización por zumbido en anteras poricidas, como ocurre en las familias Melastomataceae y Solanaceae. Esta última es de gran importancia económica para el ser humano,
+          ya que incluye cultivos como tomate (<em>Solanum lycopersicum</em>), lulo (<em>Solanum quitoense</em>)y chile habanero (<em>Capsicum chinense</em>) (Silva, 2019).
+     <p>
+
+    <div class="dieta-galeria" style="display: flex; justify-content: center; gap: 20px;">
+        <figure>
+            <img src="imagenes/ng_beg.jpg" alt="Grano de polen" style="width: 300px;">
+            <figcaption style="text-align: center;"><em>Nannotrigona mellaria</em> colectando polen en flor de <em>Begonia minor</em>.</figcaption>
+        </figure>
+        <figure>
+            <img src="imagenes/ng_p.jpg" alt="Flor urbana" style="width: 350px;">
+            <figcaption style="text-align: center;">Granos de polen de colectados por <em>Nannotrigona mellaria</em></figcaption>
+                
+                
+        </figure>
+        <figure>
+            <img src="imagenes/tg_tra.jpg" alt="Grano de polen" style="width: 350px;">
+            <figcaption style="text-align: center;"><em>Tetragonisca anustula</em> colectando polen en flor de <em>Tradescantia zebrina</em>.</figcaption>
+        </figure>
+        <figure>
+            <img src="imagenes/tg_p.jpg" alt="Grano de polen" style="width: 400px;">
+            <figcaption style="text-align: center;">Granos de polen colectados por las <em>Tetragonisca angustula</em></figcaption>
+        </figure>
+
+    </div>
+</section>
+
+<!-- Sección: Monitoreo -->
+<section id="Monitoreo de Colonias Urbanas y Recursos Florales">
+    <h2>Monitoreo de Colonias Urbanas y Recursos Florales</h2>
+    <p style="text-align: justify;">
+        En este apartado se presentan las mediciones del tubo de entrada realizadas a dos colonias de <em>Nannotrigona mellaria</em> y <em>Tetragonisca angustula</em> durante un día. Se registraron variables como temperatura, humedad, hora y diámetro del tubo, además de recolectar muestras de cargas corbiculares de ambas especies,
+        asegurando que ninguna abeja fuera sacrificada en el proceso.
+        Las gráficas fueron generadas con el lenguaje de programación R, mientras que las imágenes de los granos de polen, sin procesamiento químico (sin acetólisis), se capturaron con un microscopio Leica DM500 a 100x, utilizando la cámara ICC50 W.
+    </p>
+    <div class="galeria-container">
+        <figure>
+            <img src="imagenes/nt.jpg" alt="Abejas Urbanas de Medellín" class="imagen-galeria">
+            <figcaption>(a)Mapa de calor que representa la variación del diámetro del tubo de entrada en un nido de Nannotrigona mellaria a lo largo del día, junto con los tipos de granos de polen transportados : (b) Malvaceae, (c) Myrtaceae.</figcaption>
+        </figure> 
+
+        <figure>
+            <img src="imagenes/tg.jpg" alt="Abejas Urbanas de Medellín" class="imagen-galeria">
+            <figcaption>(a)Mapa de calor que representa la variación del diámetro del tubo de entrada en un nido de Tetragonisca angustula a lo largo del día, junto con los tipos de granos de polen transportados: (b) Poaceae, (c) Cyperaceae.</figcaption>
+        </figure> 
+    </div>
+</section>
+   <!-- Sección: Mapa de Distribución -->
+   <section id="mapa">
+    <h2>Mapa de Distribución</h2>
+    <p style="text-align: justify;">
+        El mapa muestra la distribución de colonias urbanas de diferentes especies de abejas sociales sin aguijón en el Valle de Aburrá y otras áreas fuera de esta región. En él se pueden visualizar los sitios de avistamiento donde se han identificado colonias, 
+        destacando <em>Tetragonisca angustula</em> en amarillo, <em>Nannotrigona mellaria</em> en azul, y  <em>Scaptotrigona cf. limae</em> en rojo. 
+    </p>
+    <div id="map"></div> <!-- Asegúrate de definir height y width -->
+ <!-- Sección: Recursos -->
+ <section id="recursos">
+    <h2>Recursos Bibliográficos</h2>
+    <p style="text-align: justify;">Compartimos recursos bibliográficos para que los usuarios aprendan más sobre las abejas, incluyendo cómo diferenciarlas de otros insectos e identificar sus sitios de nidificación. Además, proporcionamos un resumen de diversos 
+        conteos melisopalinológicos realizados en distintas zonas de la región Andina y el Caribe. También ponemos a disposición un catálogo polínico de los Andes Colombianos, una herramienta fundamental para identificar los granos de polen visitados por las abejas y otros vectores de polinización.
+    </p>
+    <ul>
+        <li><a href="Doc_paginas/abejas_valle_aburra.pdf" target="_blank">Abejas_Valle_aburra</a></li>
+        <li><a href="Doc_paginas/fidelidad_Apis_mellifera.pdf" target="_blank">Fidelidad_Apis_mellifera</a></li>
+        <li><a href="Doc_paginas/catalogo_polinico_andes.pdf"target="_blank">Cátalogo_polínico_andes </a></li>
+    </ul>
+</section>
+   <!-- Bibliografía -->
+<section id="Bibliografía">
+    <h2>Bibliografía</h2>
+    <ul style="text-align: justify;"> 
+    <li> Jaramillo Silva, J. C. (2019). Taxonomy, phylogeny and geographical distribution of Nannotrigona (Hymenoptera: Apidae: Meliponini) in Colombia (Tesis de maestría). Universidad Nacional de Colombia, Facultad de Ciencias, Departamento de Biología, Bogotá, Colombia.</li>
+    <li>Nates-Parra, G., & Brochero, H. L. (Eds.). (2021). La abeja angelita, Tetragonisca angustula (Latreille, 1811) (Hymenoptera: Apidae: Meliponini): Biología, ecología, genética y potencial mercado de su miel en Colombia. Centro Editorial Facultad de Ciencias Agrarias, Universidad Nacional de Colombia, Sede Bogotá.</li>
+    </ul>  
+    </p>  
+</section>
+
+<!-- Sección: Contacto -->
+<section id="contacto">
+    <h2>Contacto</h2>
+    
+    <p>Si tienes preguntas sobre las abejas urbanas, no dudes en contactarnos a través de WhatsApp o por correo electrónico: marcecr2008@gmail.com.</p>
+    
+    <!-- Sección de "Quiénes Somos" -->
+    <h3>Quiénes Somos</h3>
+    <div class="quienes-somos-galeria">
+        <figure>
+            <img src="imagenes/foto_lab.jpeg" alt="Persona 3" style="width: 200px;">
+            <figcaption>Ivonne Marcela Castañeda Riascos - Ingeniera Agrónoma, MSc en Geomorfología y suelos (Palinóloga).</figcaption>
+        </figure>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.1/papaparse.min.js"></script>
+  <!-- Pie de página -->
+  <footer>
+    <p>¿Tienes dudas? Contáctanos por WhatsApp:</p>
+    <a href="https://wa.me/573104094842" class="whatsapp-button">Enviar Mensaje</a>
+    <p>&copy; 2024 Abejas Urbanas de Medellín</p>
+    <img src="imagenes/logo_sfcc.jpg" alt="Logo Abejas Urbanas de Medellín" class="logo-inferior-centro">
+  </footer>
+  <script>
+      const map = L.map('map').setView([6.2442, -75.5812], 12); // Coordenadas de Medellín
+        L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+             maxZoom: 19,
+             attribution: 'Tiles © Esri'
+         }).addTo(map);
+         const icons = {
+            "Tetragonista angustula": L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-yellow.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41]
+            }),
+            "Nannotrigona mellaria": L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-blue.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41]
+            }),
+            "Scaptotrigona cf.limae": L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41]
+            })
+        };
+
+        const datos = [
+            { Especie: "Tetragonista angustula", Latitud: 6.259608333, Longitud: -75.54960278},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259638889, Longitud: -75.54960556},
+            { Especie: "Tetragonista angustula", Latitud: 6.259775, Longitud: -75.550975},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.25965, Longitud: -75.54959167},
+            { Especie: "Tetragonista angustula", Latitud: 6.259855556, Longitud: -75.55108333},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259702778, Longitud: -75.54981389},
+            { Especie: "Scaptotrigona cf.limae",  Latitud: 6.264803,Longitud: -75.577391},
+            { Especie: "Tetragonista angustula", Latitud: 6.260433333, Longitud: -75.55189722},
+            { Especie: "Tetragonista angustula", Latitud: 6.260247222, Longitud: -75.55233333},
+            { Especie: "Tetragonista angustula", Latitud: 6.253447, Longitud: -75.552988},
+            { Especie: "Tetragonista angustula", Latitud: 6.250863, Longitud: -75.552418},
+            { Especie: "Scaptotrigona cf.limae",  Latitud: 6.250865,Longitud: -75.552547},
+            { Especie: "Tetragonista angustula", Latitud: 6.251222, Longitud: -75.553638},
+            { Especie: "Tetragonista angustula", Latitud: 6.25109, Longitud: -75.553572},
+            { Especie: "Tetragonista angustula", Latitud: 6.253447, Longitud: -75.552988},
+            { Especie: "Tetragonista angustula", Latitud: 6.251455, Longitud: -75.551885},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259766667, Longitud: -75.54995556},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259780556, Longitud: -75.55005833},
+            { Especie: "Nannotrigona mellaria",  Latitud:6.259663889, Longitud: -75.55033611},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259702778, Longitud: -75.55029167},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259702778, Longitud: -75.550425},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.260111111, Longitud: -75.55085},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.260419444, Longitud: -75.55196111},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.260066667, Longitud: -75.55154722},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259108333, Longitud:-75.55125278},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259344444 , Longitud: -75.55321667},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259741667, Longitud: -75.55389444},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259238889, Longitud: -75.55332222},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.258838889 , Longitud: -75.5536},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.258613889, Longitud: -75.55393333},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259380556, Longitud: -75.554125},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259516667, Longitud:-75.55368333},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259866667, Longitud:-75.55387222},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.258525, Longitud: -75.55322778},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259698, Longitud: -75.549473},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259712, Longitud: -75.54978},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259798, Longitud: -75.550052},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259685, Longitud: -75.550443},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259655, Longitud: -75.550578},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259618, Longitud: -75.550852},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.25891, Longitud: -75.551367},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.257462, Longitud: -75.551918},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.257398, Longitud: -75.551905},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.256468, Longitud: -75.55187},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.257, Longitud: -75.552637},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.256288, Longitud: -75.552915},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.255753, Longitud: -75.552672},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.250968, Longitud: -75.552342},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259694, Longitud: -75.549446},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259693, Longitud: -75.550435},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.25669, Longitud: -75.550438},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.259694, Longitud: -75.549446},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.255722, Longitud: -75.55362},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.2557, Longitud: -75.553707},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.254693, Longitud: -75.554392},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.254978, Longitud: -75.555005},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.254807, Longitud: -75.554898},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.25488, Longitud: -75.555103},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.253425, Longitud: -75.553535},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.254757, Longitud: -75.555245},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.25488, Longitud: -75.555443},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.25465, Longitud: -75.555295},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.253148, Longitud: -75.554675},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.252402, Longitud: -75.555327},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.253247, Longitud: -75.55634},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.147063 , Longitud: -75.620477},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.146582 , Longitud: -75.620716},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.145830 , Longitud: -75.620697},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.146355 , Longitud: -75.622798},
+            { Especie: "Nannotrigona mellaria",  Latitud: 6.146750 , Longitud: -75.622173},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.262823, Longitud: -75.577633},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.263933, Longitud: -75.57766},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.262457, Longitud: -75.576807},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.262519, Longitud: -75.576807},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.262465, Longitud: -75.576807},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.261208, Longitud: -75.577509},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.260456, Longitud: -75.576956},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.259943, Longitud: -75.576564},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.260602 , Longitud: -75.576517},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.260598 , Longitud: -75.57632},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.260706 , Longitud:-75.576382},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.260412 , Longitud: -75.576382},
+            { Especie: "Scaptotrigona cf.limae", Latitud: 6.260438 , Longitud: -75.576381},
+            { Especie: "Tetragonista angustula", Latitud: 6.260678, Longitud: -75.561906},
+            { Especie: "Tetragonista angustula", Latitud: 6.260678, Longitud: -75.561906},
+            { Especie: "Tetragonista angustula", Latitud: 6.260678, Longitud: -75.561906},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.260785, Longitud:-75.561950 },
+            { Especie: "Nannotrigona mellaria", Latitud:  6.259698, Longitud: -75.549473},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.259712, Longitud: -75.54978},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.259798, Longitud: -75.550052},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.259685, Longitud: -75.550443},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.259655, Longitud: -75.550578},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.259618, Longitud: -75.550852},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.25891, Longitud: -75.551367},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.257462, Longitud: -75.551918},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.257398, Longitud: -75.551905},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.256468, Longitud: -75.55187},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.257, Longitud: -75.552637},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.256288, Longitud: -75.552915},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.255753, Longitud: -75.552672},
+            { Especie: "Nannotrigona mellaria", Latitud:  6.253447, Longitud: -75.552988},
+            { Especie: "Tetragonista angustula", Latitud: 6.250863, Longitud: -75.552418},
+            { Especie: "Tetragonista angustula", Latitud: 6.250865, Longitud: -75.552547},
+            { Especie: "Tetragonista angustula", Latitud: 6.251222, Longitud: -75.553638},
+            { Especie: "Tetragonista angustula", Latitud: 6.25109, Longitud: -75.553572},
+            { Especie: "Tetragonista angustula", Latitud: 6.250968, Longitud: -75.552342},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.259694, Longitud: -75.549446},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.259693, Longitud: -75.550435},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.25669, Longitud: -75.550438},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.259694, Longitud: -75.549446},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.255722, Longitud: -75.55362},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.2557, Longitud: -75.553707},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.255263, Longitud: -75.553787},
+            { Especie: "Tetragonista angustula", Latitud: 6.254693, Longitud: -75.554392},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.253447, Longitud: -75.552988},
+            { Especie: "Tetragonista angustula", Latitud: 6.254978, Longitud: -75.555005},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.254807, Longitud: -75.554898},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.25488, Longitud: -75.555103},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.253425, Longitud:-75.553535},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.254757, Longitud: -75.555245},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.25488, Longitud: -75.555443},
+            { Especie: "Tetragonista angustula", Latitud: 6.26484, Longitud: -75.576849},
+            { Especie: "Tetragonista angustula", Latitud: 6.264861, Longitud: -75.5769},
+            { Especie: "Tetragonista angustula", Latitud: 6.265376, Longitud: -75.57721},
+            { Especie: "Tetragonista angustula", Latitud: 6.265391, Longitud: -75.577428},
+            { Especie: "Tetragonista angustula", Latitud: 6.265166, Longitud: -75.577221},
+            { Especie: "Tetragonista angustula", Latitud: 6.265192, Longitud: -75.577434},
+            { Especie: "Tetragonista angustula", Latitud:6.265129, Longitud: -75.57743},
+            { Especie: "Tetragonista angustula", Latitud: 6.264476, Longitud: -75.577441},
+            { Especie: "Tetragonista angustula", Latitud: 6.264811, Longitud: -75.577413},
+            { Especie: "Tetragonista angustula", Latitud: 6.264282, Longitud: -75.577741},
+            { Especie: "Tetragonista angustula", Latitud: 6.264366, Longitud: -75.577737},
+            { Especie: "Tetragonista angustula", Latitud: 6.263999, Longitud: -75.577901},
+            { Especie: "Tetragonista angustula", Latitud: 6.264082, Longitud: -75.577811},
+            { Especie: "Tetragonista angustula", Latitud: 6.26398, Longitud: -75.577597},
+            {Especie: "Tetragonista angustula", Latitud: 6.264028, Longitud: -75.577605 },
+            { Especie: "Tetragonista angustula", Latitud: 6.264035, Longitud: -75.577605 },
+            { Especie: "Tetragonista angustula", Latitud: 6.26288, Longitud: -75.577538},
+            { Especie: "Tetragonista angustula", Latitud: 6.262781, Longitud: -75.577411},
+            { Especie: "Tetragonista angustula", Latitud: 6.262759, Longitud: -75.575509 },
+            { Especie: "Tetragonista angustula", Latitud: 6.262535, Longitud: -75.579107 },
+            { Especie: "Tetragonista angustula", Latitud: 6.262551, Longitud: -75.579106 },
+            { Especie: "Tetragonista angustula", Latitud: 6.262553, Longitud: -75.579107 },
+            { Especie: "Tetragonista angustula", Latitud: 6.261645, Longitud: -75.577221 },
+            { Especie: "Tetragonista angustula", Latitud: 6.261677, Longitud: -75.577224},
+            { Especie: "Tetragonista angustula", Latitud: 6.261516, Longitud:-75.577221},
+            { Especie: "Tetragonista angustula", Latitud: 6.261677, Longitud: -75.577222},
+            { Especie: "Tetragonista angustula", Latitud: 6.261236, Longitud: -75.5774},
+            { Especie: "Tetragonista angustula", Latitud: 6.261489, Longitud:-75.575531},
+            { Especie: "Tetragonista angustula", Latitud: 6.261484, Longitud:-75.575533},
+            { Especie: "Tetragonista angustula", Latitud:6.261779 , Longitud: -75.577232},
+            { Especie: "Tetragonista angustula", Latitud: 6.261998, Longitud: -75.577475},
+            { Especie: "Tetragonista angustula", Latitud:6.262057 , Longitud: -75.577685},
+            { Especie: "Tetragonista angustula", Latitud: 6.262069, Longitud: -75.577474},
+            { Especie: "Tetragonista angustula", Latitud: 6.262004, Longitud: -75.577472},
+            { Especie: "Tetragonista angustula", Latitud: 6.260951, Longitud: -75.577286},
+            { Especie: "Tetragonista angustula", Latitud: 6.260659, Longitud: -75.57728},
+            { Especie: "Tetragonista angustula", Latitud: 6.261204, Longitud: -75.577373},
+            { Especie: "Tetragonista angustula", Latitud: 6.260962, Longitud: -75.577282},
+            { Especie: "Tetragonista angustula", Latitud: 6.260833, Longitud: -75.577284},
+            { Especie: "Tetragonista angustula", Latitud: 6.260708, Longitud:-75.576112},
+            { Especie: "Tetragonista angustula", Latitud: 6.260716, Longitud: -75.575898},
+            { Especie: "Tetragonista angustula", Latitud: 6.260707, Longitud: -75.57759},
+            { Especie: "Tetragonista angustula", Latitud: 6.260718, Longitud: -75.575894},
+            { Especie: "Tetragonista angustula", Latitud: 6.260718, Longitud: -75.575894},
+            { Especie: "Tetragonista angustula", Latitud: 6.260719, Longitud: -75.575894},
+            { Especie: "Tetragonista angustula", Latitud: 6.260717, Longitud: -75.575899},
+            { Especie: "Tetragonista angustula", Latitud: 6.261186, Longitud: -75.575361},
+            { Especie: "Tetragonista angustula", Latitud: 6.261145, Longitud: -75.575365},
+            { Especie: "Tetragonista angustula", Latitud: 6.261144, Longitud: -75.57553},
+            { Especie: "Tetragonista angustula", Latitud: 6.261131, Longitud: -75.575432},
+            { Especie: "Tetragonista angustula", Latitud: 6.261121, Longitud: -75.575438},
+            { Especie: "Tetragonista angustula", Latitud: 6.261116, Longitud: -75.575438},
+            { Especie: "Tetragonista angustula", Latitud: 6.261897, Longitud: -75.575438},
+            { Especie: "Tetragonista angustula", Latitud: 6.261915, Longitud: -75.575436},
+            { Especie: "Tetragonista angustula", Latitud: 6.251222, Longitud: -75.553638},
+            { Especie: "Tetragonista angustula", Latitud: 6.251222, Longitud: -75.553638},
+            { Especie: "Tetragonista angustula", Latitud: 6.255263, Longitud: -75.553787},
+            { Especie: "Tetragonista angustula", Latitud: 6.261355, Longitud: -75.577108},
+            { Especie: "Tetragonista angustula", Latitud: 6.261332, Longitud: -75.577182},
+            { Especie: "Tetragonista angustula", Latitud: 6.261247, Longitud: -75.577322},
+            { Especie: "Tetragonista angustula", Latitud: 6.261231, Longitud: -75.577387},
+            { Especie: "Tetragonista angustula", Latitud: 6.262672, Longitud: -75.579147},
+            { Especie: "Tetragonista angustula", Latitud: 6.26262, Longitud: -75.579182},
+            { Especie: "Tetragonista angustula", Latitud: 6.262715, Longitud:-75.579187},
+            { Especie: "Tetragonista angustula", Latitud:6.26211 , Longitud: -75.57921},
+            { Especie: "Tetragonista angustula", Latitud: 6.261947, Longitud: -75.5796},
+            { Especie: "Tetragonista angustula", Latitud: 6.260192, Longitud: -75.575358},
+            { Especie: "Tetragonista angustula", Latitud: 6.260194, Longitud: -75.575283},
+            { Especie: "Tetragonista angustula", Latitud: 6.259869, Longitud: -75.575367},
+            { Especie: "Tetragonista angustula", Latitud: 6.263992, Longitud: -75.575283},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.264503, Longitud: -75.577542},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.264207, Longitud: -75.578173},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.26424,Longitud: -75.578075},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.264277, Longitud: -75.577975},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.264187, Longitud: -75.577895},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.264187, Longitud: -75.57789},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.263898, Longitud: -75.578018},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.264033, Longitud: -75.578152},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.264062, Longitud:-75.57711},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.263815, Longitud: -75.577887},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262805, Longitud: -75.577827},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262185 , Longitud: -75.577965},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262785 , Longitud: -75.577965},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262842, Longitud: -75.577915},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262385, Longitud: -75.576113},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262373, Longitud: -75.576098},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262415, Longitud: -75.575658},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262322, Longitud: -75.575347},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262322, Longitud: -75.575347},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262533, Longitud: -75.575818},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262902, Longitud: -75.575712},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262943, Longitud: -75.5759},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262942, Longitud: -75.577195},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262063, Longitud: -75.577517},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.261417, Longitud: -75.57765},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.261437, Longitud: -75.577635},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.261437, Longitud: -75.577635},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.261417, Longitud: -75.577663},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.261417, Longitud: -75.577663},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262208, Longitud: -75.578855},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.26262, Longitud: -75.579245},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.26262, Longitud:-75.579245 },
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262648, Longitud: -75.579212},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262697, Longitud: -75.579177},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262715, Longitud: -75.579187},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.262715, Longitud: -75.579187},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.261947, Longitud: -75.5794},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.261947, Longitud: -75.579402},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260177, Longitud: -75.578192},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.26062, Longitud: -75.57829},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.261242, Longitud: -75.575658},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260327, Longitud: -75.577505},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260327, Longitud: -75.577505},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.26032, Longitud: -75.57719},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260267, Longitud: -75.577127},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.261085, Longitud: -75.577102},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.26088, Longitud: -75.576423},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.26051, Longitud: -75.576585},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260442, Longitud: -75.576557},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.26044, Longitud: -75.576563},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260522, Longitud: -75.576585},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.26044, Longitud: -75.576513},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260472, Longitud: -75.57659},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.26044, Longitud: -75.576548},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.26047, Longitud: -75.576552},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260412, Longitud: -75.57658},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260478, Longitud: -75.576386},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260408, Longitud: -75.576333},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260202, Longitud: -75.575612},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260122, Longitud: -75.575475},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260068, Longitud: -75.575408},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.260455, Longitud: -75.575403}, 
+            { Especie: "Tetragonista angustula", Latitud: 6.259215, Longitud: -75.563095},
+            { Especie: "Tetragonista angustula", Latitud: 6.259471, Longitud: -75.562935},
+            { Especie: "Nannotrigona mellaria", Latitud: 6.259306, Longitud: -75.549039},
+
+        ];
+
+        datos.forEach(({ Especie, Latitud, Longitud }) => {
+            const icon = icons[Especie] || L.icon({
+                iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+                iconSize: [25, 41],
+                iconAnchor: [12, 41]
+            });
+            L.marker([Latitud, Longitud], { icon }).addTo(map)
+                .bindPopup(`<b>Especie:</b> ${Especie}`);
+        });
+
+
+
+    puntos.forEach(({ Especie, Latitud, Longitud }) => {
+    console.log(`Procesando: ${Especie}, ${Latitud}, ${Longitud}`); // 👀 Verificar que se imprimen los datos
+
+    const icon = icons[Especie] || L.icon({
+        iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-red.png',
+        iconSize: [25, 41],
+        iconAnchor: [12, 41]
+    });
+
+    L.marker([Latitud, Longitud], { icon }).addTo(map)
+        .bindPopup(`<b>Especie:</b> ${Especie}`);
+});
+
+
+</script>
+</body>
+</html>
