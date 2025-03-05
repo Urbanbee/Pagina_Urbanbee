@@ -30,15 +30,27 @@
             list-style: none;
             text-align: center;
             padding: 0;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         nav ul li {
-            display: inline;
-            margin-right: 15px;
+            margin: 5px 10px;
         }
         nav ul li a {
             color: #fff;
             text-decoration: none;
             font-weight: bold;
+        }
+        @media screen and (max-width: 768px) {
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            nav ul li {
+                display: block;
+                margin-bottom: 10px;
+            }
         }
         section {
             padding: 20px;
@@ -46,7 +58,8 @@
         }
         /* Estilos del mapa */
         #map {
-            height: 500px;
+            height: 60vh;
+            min-height: 300px;
             width: 100%;
             margin-bottom: 20px;
         }
@@ -77,18 +90,24 @@
         /* Estilos de la galería */
         .galeria-container {
             display: flex;
-            justify-content: center;
-            gap: 20px;
             flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
         }
-        figure {
+        .galeria-container figure {
+            flex: 1 1 45%;
             text-align: center;
         }
-        figcaption {
-            font-style: italic;
-            color: #555;
-            margin-top: 5px;
+        .galeria-container img {
+            width: 100%;
+            max-width: 600px;
+            height: auto;
         }
+        
+        @media screen and (max-width: 600px) {
+            .galeria-container figure {
+                flex: 1 1 100%;
+            }
         /* Formulario */
         form {
             text-align: center;
